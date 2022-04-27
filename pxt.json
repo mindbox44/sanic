@@ -5,7 +5,8 @@
         "device": "*",
         "arcade-tile-util": "github:microsoft/arcade-tile-util#v1.0.1",
         "arcade-background-scroll": "github:microsoft/arcade-background-scroll#6cfbf925b9a4d5ddf3e1078e6cf6ca6a1aebb301",
-        "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2"
+        "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2",
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.2"
     },
     "files": [
         "main.blocks",

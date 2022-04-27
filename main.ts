@@ -4,7 +4,6 @@ namespace SpriteKind {
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
-    music.playMelody("E G C5 E - C - D ", 450)
     chaos_nachos += 1
     if (chaos_nachos == 7) {
         if (rings >= 50) {
@@ -501,7 +500,7 @@ function sanfran () {
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888
         `)
-    scroller.setCameraScrollingMultipliers(0.5, 0.5, scroller.BackgroundLayer.Layer3)
+    scroller.setCameraScrollingMultipliers(0.3, 0.5, scroller.BackgroundLayer.Layer3)
     tiles.setCurrentTilemap(tilemap`level2`)
     sanic.setPosition(8, 8)
     robuttnik.destroy()
@@ -1224,6 +1223,9 @@ let robuttnik: Sprite = null
 let sanic: Sprite = null
 let chaos_nachos = 0
 let rings = 0
+color.setPalette(
+color.Arcade
+)
 scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
@@ -1718,7 +1720,7 @@ scroller.scrollBackgroundWithSpeed(-300, -300)
 scroller.scrollBackgroundWithCamera(scroller.CameraScrollMode.OnlyHorizontal)
 scroller.setCameraScrollingMultipliers(0, 0, scroller.BackgroundLayer.Layer0)
 scroller.setCameraScrollingMultipliers(0.1, 0.1, scroller.BackgroundLayer.Layer1)
-scroller.setCameraScrollingMultipliers(0.25, 0.25, scroller.BackgroundLayer.Layer2)
+scroller.setCameraScrollingMultipliers(0.25, 0.5, scroller.BackgroundLayer.Layer2)
 rings = 0
 info.setScore(0)
 chaos_nachos = 0
