@@ -1020,9 +1020,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     if (rings == 0) {
         game.over(false)
     }
-    music.playMelody("G A G A G - - - ", 500)
     info.setScore(0)
     rings = 0
+    music.playMelody("G A G A G - - - ", 500)
 })
 function _super () {
     music.beamUp.play()
@@ -1352,9 +1352,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         if (rings == 0) {
             game.over(false)
         } else {
-            music.playMelody("G A G A G - - - ", 500)
             rings = 0
             info.setScore(0)
+            music.playMelody("G A G A G - - - ", 500)
         }
     }
 })
