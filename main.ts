@@ -2,6 +2,7 @@ namespace SpriteKind {
     export const enemy2 = SpriteKind.create()
     export const mlg = SpriteKind.create()
     export const big_robot = SpriteKind.create()
+    export const badnik = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile1`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
@@ -874,6 +875,20 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         ball = 1
     }
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.badnik, function (sprite, otherSprite) {
+    if (ball == 0) {
+        if (rings == 0) {
+            game.over(false)
+        }
+        if (rings > 0) {
+            lose_rings()
+        }
+    }
+    if (ball == 1) {
+        motorola.destroy()
+        sanic.setVelocity(0, -100)
+    }
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     characterAnimations.runFrames(
     sanic,
@@ -1020,9 +1035,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, ot
     if (rings == 0) {
         game.over(false)
     }
-    info.setScore(0)
-    rings = 0
-    music.playMelody("G A G A G - - - ", 500)
+    if (rings > 0) {
+        lose_rings()
+    }
 })
 function _super () {
     music.beamUp.play()
@@ -1056,6 +1071,78 @@ function _super () {
 sprites.onOverlap(SpriteKind.mlg, SpriteKind.enemy2, function (sprite, otherSprite) {
     god_aggmen_health += -5
     music.pewPew.play()
+    animation.runImageAnimation(
+    Super_Aggmen,
+    [img`
+        ................................
+        ................................
+        ...........1.....1..............
+        ............1ddd1...............
+        333........dd1d1dd..............
+        333........d1d1d1d..............
+        333........1311131..............
+        111........eeeed1d..............
+        1111.eeeee.eeeeeeeee.ee.........
+        .1111.eeeee.dddddeeee.e.........
+        .11111...11111331111............
+        .111111.11111133111111111.......
+        ..111111111111331111111111......
+        ....111111111133111111.11111....
+        .....111111111331111111..1111...
+        .....111111111331111111...1111..
+        ....1111111111331111111....111..
+        ....3333333333333333333....333..
+        ....1111111111331111111....333..
+        ....1111111111111111111....333..
+        ....1111111111111111111.........
+        .....111111111111111111.........
+        .....11111111111111111..........
+        ......111111111111111...........
+        .....11..111111111111...........
+        11..111.............11..........
+        1111111..............1..........
+        11111................11.........
+        1111..................11111.....
+        .111...................1111.....
+        .11....................111......
+        ........................1.......
+        `,img`
+        ................................
+        ................................
+        ...........f.....f..............
+        ............fdddf...............
+        333........ddfdfdd..............
+        333........dfdfdfd..............
+        333........f3fff3f..............
+        fff........eeeedfd..............
+        ffff.eeeee.eeeeeeeee.ee.........
+        .ffff.eeeee.dddddeeee.e.........
+        .fffff...fffff33ffff............
+        .ffffff.ffffff33fffffffff.......
+        ..ffffffffffff33ffffffffff......
+        ....ffffffffff33ffffff.fffff....
+        .....fffffffff33fffffff..ffff...
+        .....fffffffff33fffffff...ffff..
+        ....ffffffffff33fffffff....fff..
+        ....3333333333333333333....333..
+        ....ffffffffff33fffffff....333..
+        ....fffffffffffffffffff....333..
+        ....fffffffffffffffffff.........
+        .....ffffffffffffffffff.........
+        .....fffffffffffffffff..........
+        ......fffffffffffffff...........
+        .....ff..ffffffffffff...........
+        ff..fff.............ff..........
+        fffffff..............f..........
+        fffff................ff.........
+        ffff..................fffff.....
+        .fff...................ffff.....
+        .ff....................fff......
+        ........................f.......
+        `],
+    100,
+    false
+    )
     if (god_aggmen_health <= 0) {
         music.zapped.play()
         Super_Aggmen.destroy()
@@ -1224,6 +1311,51 @@ sprites.onOverlap(SpriteKind.mlg, SpriteKind.enemy2, function (sprite, otherSpri
         death_egg_robot.setPosition(1376, 160)
     }
 })
+function lose_rings () {
+    info.setScore(0)
+    rings = 0
+    music.playMelody("G A G A G - - - ", 500)
+    animation.runImageAnimation(
+    sanic,
+    [img`
+        . . 8 8 8 8 8 8 8 . . . . . . . 
+        . . . . . . 8 8 8 8 8 . . . . . 
+        . . . . 8 8 8 1 8 1 8 8 . . . . 
+        . 8 8 8 8 8 1 f 1 f 1 8 . . . . 
+        . 8 8 8 8 8 8 1 8 1 8 8 . . . . 
+        . . 1 1 . 8 d f d f d 8 . 1 1 . 
+        . . 1 1 8 8 f d d d d 8 . 1 1 . 
+        . . . 8 8 8 8 8 8 8 8 8 8 8 . . 
+        . . 8 8 8 8 8 d d d 8 8 . . . . 
+        . . . . . . 8 d d d 8 . . . . . 
+        . . . . . . 8 8 d 8 8 . . . . . 
+        . . . . . . . 8 8 8 . . . . . . 
+        . . . . . . 8 8 . 8 . . . . . . 
+        . . . . . . 8 . . 8 8 . . . 1 . 
+        . . . . . . 8 . . . 8 . . . . . 
+        . . . . 2 2 2 . . . 8 2 2 . . . 
+        `,img`
+        . . 8 8 8 8 8 8 8 . . . . . . . 
+        . . . . . . 8 8 8 8 8 . . . . . 
+        . . . . 8 8 8 1 8 1 8 8 . . . . 
+        . 8 8 8 8 8 1 f 1 f 1 8 . . . . 
+        . 8 8 8 8 8 8 1 8 1 8 8 . . . . 
+        . . . . . 8 f d d f d 8 . . . . 
+        . . . . 8 8 d f d d d 8 . . . . 
+        . . . 8 8 8 8 8 8 8 8 . . . . . 
+        . . 8 8 8 . 8 d d d 8 8 . . . . 
+        . . . . . 8 8 d d d 8 8 8 . . . 
+        . . . . . 8 8 8 d 8 8 . 8 8 . . 
+        . . . . 8 . . 8 8 8 . . . 8 . . 
+        . . . 1 1 . 8 8 . 8 . . . 1 1 . 
+        . . . 1 1 . 8 . . 8 8 . . 1 1 . 
+        . . . . . . 8 . . . 8 . . . . . 
+        . . . . 2 2 2 . . . 8 2 2 . . . 
+        `],
+    500,
+    false
+    )
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     sanic.setVelocity(-100, -100)
     if (ball == 1) {
@@ -1341,7 +1473,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
             500,
             false
             )
-            robuttnik.setVelocity(150, -150)
+            robuttnik.setVelocity(0, -150)
             music.playMelody("D D E E G A C5 D ", 120)
             robuttnik.destroy()
             sanfran()
@@ -1352,9 +1484,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         if (rings == 0) {
             game.over(false)
         } else {
-            rings = 0
-            info.setScore(0)
-            music.playMelody("G A G A G - - - ", 500)
+            lose_rings()
         }
     }
 })
@@ -1364,6 +1494,7 @@ let god_aggmen_health = 0
 let Super_Aggmen: Sprite = null
 let ball = 0
 let robuttnik_health = 0
+let motorola: Sprite = null
 let robuttnik: Sprite = null
 let sanic: Sprite = null
 let chaos_nachos = 0
@@ -1928,6 +2059,23 @@ robuttnik = sprites.create(img`
     ................................
     `, SpriteKind.Enemy)
 robuttnik.setPosition(944, 400)
+motorola = sprites.create(img`
+    . . . . . . . . . . . . 
+    . . . . . . . . . . . . 
+    . . . . . . . . . . . . 
+    . . . . . . . 2 2 2 2 . 
+    . . . . . 2 2 2 2 1 2 2 
+    . . . . 2 1 2 2 2 2 2 2 
+    8 8 . 2 2 2 2 1 2 2 2 2 
+    f 8 f 2 1 2 2 2 2 2 1 2 
+    8 8 8 2 2 2 2 2 2 2 2 2 
+    . . . . f f . . f f f f 
+    . . . f f f f . f f f f 
+    . . . f f f . . . f f . 
+    `, SpriteKind.badnik)
+motorola.setPosition(128, 411)
+motorola.ay = 500
+motorola.setVelocity(-50, 0)
 robuttnik_health = 8
 ball = 0
 sanic.setStayInScreen(true)
